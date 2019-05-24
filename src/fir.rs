@@ -30,10 +30,10 @@ macro_rules! impl_scalar_sampletype {
         impl SampleType for $t {
             type AccType = $tt;
             type TapType = $tt;
-            
+
             #[inline]
             fn gain(interpolate: usize) -> $tt { $tapsum / interpolate as $tt }
-            
+
             #[inline]
             unsafe fn input(x: *const $t, delay: *mut $tt) {
                 *delay = *x as $tt;
@@ -187,7 +187,7 @@ impl <T: SampleType> FIR<T> {
                 h[n] = 0.0_f64;
             }
         }
-        FIR::from_gains(n_taps, &h, decimate, 1) 
+        FIR::from_gains(n_taps, &h, decimate, 1)
     }
 
     /// Create a new FIR that implements a specified raised cosine filter,
@@ -768,12 +768,12 @@ mod tests {
         }
         let taps = firwin2(16, &gains);
         assert_eq!(taps, vec!{
-            -0.0013739594312205646, -0.005478372904749667,
+            -0.0013739594312205644, -0.005478372904749667,
             -0.012343994610893342, -0.010323351794476321, 0.021387446454536923,
-            0.09167900348875416, 0.17954532405889292, 0.24108715546226311,
+            0.09167900348875416, 0.17954532405889295, 0.24108715546226311,
             0.24035744268642953, 0.17776648555261024, 0.08976231035333902,
             0.020081701014194094, -0.01085320791569337, -0.012398611604538569,
-            -0.00540355168901675, -0.0012970506629601231});
+            -0.00540355168901675, -0.0012970506629601235});
     }
 
     #[test]
