@@ -1,5 +1,5 @@
-extern crate time;
 extern crate sdr;
+use std::time::Instant;
 use sdr::FIR;
 use sdr::IQ;
 
@@ -25,13 +25,12 @@ fn bench_scalar_fixed() {
         x.push(3); x.push(7); x.push(4); x.push(6);
         x.push(3); x.push(7); x.push(4); x.push(6);
     }
-    let t0 = time::precise_time_ns();
+    let t0 = Instant::now();
     for _ in 0..n_repeats {
         fir.process(&x);
     }
-    let t1 = time::precise_time_ns();
+    let total_time = t0.elapsed().as_secs_f64();
     let total_samples = n_samples as f64 * n_repeats as f64;
-    let total_time = (t1 - t0) as f64 / 1e9;
     let throughput = total_samples / total_time;
     println!("i16:      {} blocks of {} samples, {:.2}Msps",
              n_repeats, n_samples, throughput / 1000000.0_f64);
@@ -51,13 +50,12 @@ fn bench_scalar_float() {
         x.push(3.0); x.push(7.0); x.push(4.0); x.push(6.0);
         x.push(3.0); x.push(7.0); x.push(4.0); x.push(6.0);
     }
-    let t0 = time::precise_time_ns();
+    let t0 = Instant::now();
     for _ in 0..n_repeats {
         fir.process(&x);
     }
-    let t1 = time::precise_time_ns();
+    let total_time = t0.elapsed().as_secs_f64();
     let total_samples = n_samples as f64 * n_repeats as f64;
-    let total_time = (t1 - t0) as f64 / 1e9;
     let throughput = total_samples / total_time;
     println!("f32:      {} blocks of {} samples, {:.2}Msps",
              n_repeats, n_samples, throughput / 1000000.0_f64);
@@ -79,13 +77,12 @@ fn bench_complex_fixed() {
         x.push(IQ{re:3, im:-3}); x.push(IQ{re:7, im:-7});
         x.push(IQ{re:4, im:-4}); x.push(IQ{re:6, im:-6});
     }
-    let t0 = time::precise_time_ns();
+    let t0 = Instant::now();
     for _ in 0..n_repeats {
         fir.process(&x);
     }
-    let t1 = time::precise_time_ns();
+    let total_time = t0.elapsed().as_secs_f64();
     let total_samples = n_samples as f64 * n_repeats as f64;
-    let total_time = (t1 - t0) as f64 / 1e9;
     let throughput = total_samples / total_time;
     println!("IQ<i16>:  {} blocks of {} samples, {:.2}Msps",
              n_repeats, n_samples, throughput / 1000000.0_f64);
@@ -107,13 +104,12 @@ fn bench_complex_floating() {
         x.push(IQ{re:3.0, im:-3.0}); x.push(IQ{re:7.0, im:-7.0});
         x.push(IQ{re:4.0, im:-4.0}); x.push(IQ{re:6.0, im:-6.0});
     }
-    let t0 = time::precise_time_ns();
+    let t0 = Instant::now();
     for _ in 0..n_repeats {
         fir.process(&x);
     }
-    let t1 = time::precise_time_ns();
+    let total_time = t0.elapsed().as_secs_f64();
     let total_samples = n_samples as f64 * n_repeats as f64;
-    let total_time = (t1 - t0) as f64 / 1e9;
     let throughput = total_samples / total_time;
     println!("IQ<f32>:  {} blocks of {} samples, {:.2}Msps",
              n_repeats, n_samples, throughput / 1000000.0_f64);

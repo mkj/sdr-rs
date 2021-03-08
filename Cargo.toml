@@ -10,7 +10,5 @@ keywords = ["sdr", "dsp"]
 license = "MIT"
 
 [dependencies]
-num = "0.2.0"
+num = "0.4"
 
-[dev-dependencies]
-time = "0.1.42"

@@ -461,7 +461,7 @@ pub fn firwin2(n_taps: usize, gains: &[f64]) -> Vec<f64> {
     for (idx, gain) in gainsc.iter_mut().enumerate() {
         let (r, mut p) = gain.to_polar();
         p += -(n_taps as f64 - 1.0)/2.0 * PI * (idx as f64)/512.0;
-        *gain = Complex::from_polar(&r, &p);
+        *gain = Complex::from_polar(r, p);
     }
 
     // Inverse the frequency response to get the impulse response (aka taps)
